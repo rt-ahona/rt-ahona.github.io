@@ -120,9 +120,9 @@ export const PROBLEM_SOLVING: PlatformLink[] = [
     blurb: "Data structures, algorithms, and interview practice.",
   },
   {
-    platform: "HackerRank",
-    handle: "@ramisatabassum",
-    href: "https://www.hackerrank.com/ramisatabassum",
+    platform: "Beecrowd",
+    handle: "@RamisaTabassum",
+    href: "https://judge.beecrowd.com/en/profile/800539",
     icon: Terminal,
     blurb: "Problem-solving, SQL, and Python skill tracks.",
   },
@@ -132,19 +132,6 @@ export const PROBLEM_SOLVING: PlatformLink[] = [
     href: "https://codeforces.com/profile/ramisa_tabassum",
     icon: Terminal,
     blurb: "Competitive programming rounds and contest archive.",
-  },
-    {
-
-    platform: "Beecrowd",
-
-    handle: "@RamisaTabassum",
-
-    href: "https://judge.beecrowd.com/en/profile/800539",
-
-    icon: Terminal,
-
-    blurb: "Competitive programming rounds and contest archive.",
-
   },
   {
     platform: "GitHub",

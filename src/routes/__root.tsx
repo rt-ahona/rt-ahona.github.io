@@ -79,14 +79,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Ramisa Tabassum — CSE Student · Communications & Tech Leadership" },
+      { title: "Ramisa Tabassum — CSE Graduate · Communications & Tech Leadership" },
       {
         name: "description",
         content:
           "Portfolio of Ramisa Tabassum — Computer Science & Engineering student at International Standard University, campus ambassador, and executive leader with experience in digital marketing, PR, and client communication.",
       },
       { name: "author", content: "Ramisa Tabassum" },
-      { property: "og:title", content: "Ramisa Tabassum — CSE Student · Communications & Tech Leadership" },
+      { property: "og:title", content: "Ramisa Tabassum — CSE Graduate · Communications & Tech Leadership" },
       {
         property: "og:description",
         content:
@@ -95,7 +95,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
 
-      { name: "twitter:title", content: "Ramisa Tabassum — CSE Student · Communications & Tech Leadership" },
+      { name: "twitter:title", content: "Ramisa Tabassum — CSE Graduate · Communications & Tech Leadership" },
       { name: "description", content: "Portfolio of Ramisa Tabassum — Computer Science & Engineering student at International Standard University, campus ambassador, and executive leader with experience in digital marketing, PR, and client communication." },
       { property: "og:description", content: "Portfolio of Ramisa Tabassum — Computer Science & Engineering student at International Standard University, campus ambassador, and executive leader with experience in digital marketing, PR, and client communication." },
       { name: "twitter:description", content: "Portfolio of Ramisa Tabassum — Computer Science & Engineering student at International Standard University, campus ambassador, and executive leader with experience in digital marketing, PR, and client communication." },
