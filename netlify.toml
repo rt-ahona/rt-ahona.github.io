@@ -1,6 +1,3 @@
 [build]
   command = "bun run build"
-  publish = "dist/client"
-
-[build.environment]
-  BUN_VERSION = "latest"
+  publish = ".output/public"
