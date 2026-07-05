@@ -1,6 +1,6 @@
 [build]
-  command = "npm run build"
+  command = "bun run build"
   publish = ".output/public"
 
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
+[build.environment]
+  BUN_VERSION = "latest"
