@@ -86,7 +86,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Portfolio of Ramisa Tabassum — Computer Science & Engineering student at International Standard University, campus ambassador, and executive leader with experience in digital marketing, PR, and client communication.",
       },
       { name: "author", content: "Ramisa Tabassum" },
-      { property: "og:title", content: "Ramisa Tabassum — CSE Student & Communications Leader" },
+      { property: "og:title", content: "Ramisa Tabassum — CSE Student · Communications & Tech Leadership" },
       {
         property: "og:description",
         content:
@@ -95,6 +95,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
 
+      { name: "twitter:title", content: "Ramisa Tabassum — CSE Student · Communications & Tech Leadership" },
+      { name: "description", content: "Portfolio of Ramisa Tabassum — Computer Science & Engineering student at International Standard University, campus ambassador, and executive leader with experience in digital marketing, PR, and client communication." },
+      { property: "og:description", content: "Portfolio of Ramisa Tabassum — Computer Science & Engineering student at International Standard University, campus ambassador, and executive leader with experience in digital marketing, PR, and client communication." },
+      { name: "twitter:description", content: "Portfolio of Ramisa Tabassum — Computer Science & Engineering student at International Standard University, campus ambassador, and executive leader with experience in digital marketing, PR, and client communication." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/2563c9b4-c0bc-4c09-85b0-a7b881f5416c" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/2563c9b4-c0bc-4c09-85b0-a7b881f5416c" },
     ],
     links: [
       {

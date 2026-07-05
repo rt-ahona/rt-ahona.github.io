@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useMemo, useState, type FormEvent } from "react";
 import { toast } from "sonner";
 import {
   MessagesSquare,
@@ -16,32 +16,28 @@ import {
   Send,
   Award,
   Briefcase,
-  Github,
   FolderGit2,
-  Database,
-  LineChart,
-  FlaskConical,
   ExternalLink,
+  Code2,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
+import { TechBadge } from "@/components/tech-badge";
+import {
+  PROJECTS,
+  PROJECT_CATEGORIES,
+  type ProjectCategory,
+} from "@/data/projects";
+import { TECHNICAL_SKILLS, PROBLEM_SOLVING } from "@/data/skills";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
-
-const NAV_ITEMS = [
-  { href: "#summary", label: "Profile" },
-  { href: "#matrix", label: "Competencies" },
-  { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
-  { href: "#academic", label: "Education" },
-  { href: "#contact", label: "Contact" },
-];
-
 
 const SKILLS = [
   {
@@ -185,132 +181,22 @@ const LANGUAGES = [
   { name: "Bangla", level: "Native" },
 ];
 
-const PROJECTS = [
-  {
-    id: "PRJ_01",
-    icon: LineChart,
-    name: "Full-Stack Market Intelligence Terminal & Async REST API",
-    role: "Backend Software Engineer",
-    tagline:
-      "End-to-end analytics platform that ingests, persists, and streams transactional index data feeds through a fully decoupled service layer.",
-    stack: [
-      "Python (OOP)",
-      "FastAPI",
-      "SQLite",
-      "Streamlit",
-      "Uvicorn",
-      "REST API",
-      "Git",
-    ],
-    outcomes: [
-      "Decoupled data processing from the presentation layer via a dedicated microservice routing tier.",
-      "Hardened persistence against structural tampering using parameterized SQL execution patterns.",
-      "Stabilized real-time asset trajectory plots with custom state-normalization scaling on the client UI.",
-    ],
-    links: [
-      {
-        label: "GitHub Repository",
-        href: "https://github.com/rt-ahona/Data_Pipeline_Project",
-        icon: Github,
-      },
-    ],
-    tag: "Full-Stack",
-  },
-  {
-    id: "PRJ_02",
-    icon: FlaskConical,
-    name: "ML Dataset Formatting & Behavioral Processing Frameworks",
-    role: "Lead Undergraduate Researcher",
-    tagline:
-      "CSE undergraduate thesis: a programmatic framework that parses, sanitizes, tokenizes, and validates large structured text matrices for downstream ML classification pipelines.",
-    stack: [
-      "Python Core",
-      "Regex",
-      "Pattern Matching",
-      "Matrix Analysis",
-      "Data Validation",
-    ],
-    outcomes: [
-      "Built high-throughput regex routines that scrub structural noise and formatting drift from raw text feeds.",
-      "Formulated state-consistency profiles to catch sequence anomalies before execution handoff.",
-      "Authored complete technical documentation mapping schemas, validation baselines, and workflows.",
-    ],
-    links: [{ label: "Available on request", href: "#contact", icon: Mail }],
-    tag: "Research",
-  },
-  {
-    id: "PRJ_03",
-    icon: Database,
-    name: "Database Systems & Web Management Implementations",
-    role: "Database System Developer",
-    tagline:
-      "Design and transactional optimization of relational storage frameworks focused on data durability and execution reliability across continuous application cycles.",
-    stack: [
-      "SQL",
-      "MySQL",
-      "Relational Schema Design",
-      "Query Optimization",
-      "Git",
-    ],
-    outcomes: [
-      "Configured robust MySQL schemas to maintain clean, accurate operational data attributes.",
-      "Refactored query bottlenecks and transaction blocks to improve dataset reliability.",
-      "Managed codebase variations and deployment sprints via Git with zero repository regression.",
-    ],
-    links: [{ label: "Academic archive", href: "#contact", icon: Mail }],
-    tag: "Databases",
-  },
-];
-
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Header />
+      <SiteHeader />
       <main>
         <Hero />
         <TechnicalMatrix />
+        <TechnicalSkills />
         <Projects />
+        <ProblemSolving />
         <Experience />
         <Academic />
         <Contact />
       </main>
-      <Footer />
+      <SiteFooter />
     </div>
-  );
-}
-
-
-function Header() {
-  return (
-    <header className="glass-nav sticky top-0 z-50">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a href="#summary" className="flex items-center gap-2.5 group">
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-border bg-surface font-mono text-sm font-bold text-primary">
-            RT
-          </span>
-          <span className="font-mono text-sm font-semibold tracking-tight text-foreground">
-            Ramisa Tabassum
-          </span>
-        </a>
-        <nav className="hidden items-center gap-1 md:flex">
-          {NAV_ITEMS.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="rounded-md px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
-        <a
-          href="#contact"
-          className="hidden rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/20 md:inline-flex"
-        >
-          Get in Touch
-        </a>
-      </div>
-    </header>
   );
 }
 
@@ -332,22 +218,17 @@ function Hero() {
             Hi, I&apos;m <span className="text-foreground">Ramisa Tabassum</span>
           </h1>
           <p className="mt-4 text-lg font-semibold text-primary sm:text-xl">
-            CSE Student <span className="text-muted-foreground">|</span> Communications & Tech Leadership
+            CSE Student <span className="text-muted-foreground">|</span> Aspiring Software Engineer
           </p>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
-            Energetic, confident, and target-driven professional with a strong foundation in
-            Computer Science and Engineering, combined with extensive experience in leadership,
-            public relations, and client communication. Passionate about leveraging technical
-            knowledge to drive product growth, software sales, and client acquisition in fast-paced
-            environments.
+            Computer Science & Engineering undergraduate building full-stack systems,
+            data pipelines, and reliable relational backends — with a proven track
+            record in leadership, PR, and cross-team communication.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button
-              asChild
-              className="bg-primary text-primary-foreground hover:bg-primary/90"
-            >
-              <a href="#experience">
-                View Experience
+            <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90">
+              <a href="#projects">
+                View Projects
                 <ArrowUpRight className="ml-1 h-4 w-4" />
               </a>
             </Button>
@@ -360,7 +241,6 @@ function Hero() {
             </Button>
           </div>
         </div>
-
         <div className="flex items-center">
           <ProfileCard />
         </div>
@@ -378,9 +258,7 @@ function ProfileCard() {
           <span className="h-2.5 w-2.5 rounded-full bg-border" />
           <span className="h-2.5 w-2.5 rounded-full bg-border" />
         </div>
-        <span className="font-mono text-xs text-muted-foreground">
-          profile.overview
-        </span>
+        <span className="font-mono text-xs text-muted-foreground">profile.overview</span>
         <CircleDot className="h-3.5 w-3.5 text-emerald" />
       </div>
       <div className="space-y-3 p-6 font-mono text-xs sm:text-sm">
@@ -391,7 +269,7 @@ function ProfileCard() {
         <InfoRow icon={Mail} label="Email" value="ramisatabassumwork01@gmail.com" />
         <InfoRow icon={Phone} label="Phone" value="+880 1307 196548" />
         <div className="mt-4 flex items-center justify-between border-t border-border pt-3 text-[0.7rem] text-muted-foreground">
-          <span>▲ leadership · communication · tech</span>
+          <span>▲ engineering · leadership · communication</span>
           <span className="text-emerald">● available</span>
         </div>
       </div>
@@ -426,7 +304,7 @@ function TechnicalMatrix() {
         <SectionHeader
           eyebrow="02 // Competencies"
           title="Core skills & capabilities"
-          description="A structured view of the communication, technical, and leadership strengths I bring to every role."
+          description="Communication, technical, and leadership strengths I bring to every role."
         />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {SKILLS.map((skill) => {
@@ -457,17 +335,93 @@ function TechnicalMatrix() {
   );
 }
 
+function TechnicalSkills() {
+  return (
+    <section id="skills" className="border-b border-border bg-background/40">
+      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <SectionHeader
+          eyebrow="03 // Technical Stack"
+          title="Engineering toolkit"
+          description="Languages, frameworks, databases, and tools I use to design and ship software."
+        />
+        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {TECHNICAL_SKILLS.map((group) => {
+            const Icon = group.icon;
+            return (
+              <div key={group.title} className="card-surface card-surface-hover p-6">
+                <div className="flex items-center gap-3">
+                  <span className="grid h-10 w-10 place-items-center rounded-md border border-border bg-background text-primary">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <h3 className="text-base font-semibold text-foreground">
+                      {group.title}
+                    </h3>
+                    <p className="text-xs text-muted-foreground">{group.description}</p>
+                  </div>
+                </div>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {group.items.map((it) => (
+                    <TechBadge key={it.name} name={it.name} kind={it.kind} />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Projects() {
+  const [filter, setFilter] = useState<"All" | ProjectCategory>("All");
+  const filters: ("All" | ProjectCategory)[] = ["All", ...PROJECT_CATEGORIES];
+  const filtered = useMemo(
+    () => (filter === "All" ? PROJECTS : PROJECTS.filter((p) => p.category === filter)),
+    [filter],
+  );
+
   return (
     <section id="projects" className="border-b border-border">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <SectionHeader
-          eyebrow="03 // Projects"
-          title="Selected engineering projects"
-          description="Full-stack, research, and database systems work — engineered for reliability, decoupling, and clean execution paths."
-        />
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">
-          {PROJECTS.map((p) => {
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <SectionHeader
+            eyebrow="04 // Projects"
+            title="Selected engineering projects"
+            description="Full-stack, research, and database systems work — engineered for reliability, decoupling, and clean execution paths."
+          />
+          <Link
+            to="/projects"
+            className="inline-flex items-center gap-2 rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
+          >
+            View all case studies
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+
+        <div className="mt-8 flex flex-wrap gap-2">
+          {filters.map((f) => {
+            const active = f === filter;
+            const count =
+              f === "All" ? PROJECTS.length : PROJECTS.filter((p) => p.category === f).length;
+            return (
+              <button
+                key={f}
+                type="button"
+                onClick={() => setFilter(f)}
+                className={"filter-chip" + (active ? " filter-chip-active" : "")}
+                aria-pressed={active}
+              >
+                {f}
+                <span className="text-[0.65rem] opacity-70">{count}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="mt-8 grid gap-5 lg:grid-cols-3">
+          {filtered.map((p) => {
             const Icon = p.icon;
             return (
               <article
@@ -480,7 +434,7 @@ function Projects() {
                     <span>{p.id}</span>
                   </div>
                   <span className="rounded-sm border border-primary/40 bg-primary/10 px-2 py-0.5 text-primary">
-                    {p.tag}
+                    {p.category}
                   </span>
                 </div>
                 <div className="flex flex-1 flex-col p-6">
@@ -501,9 +455,7 @@ function Projects() {
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {p.stack.map((t) => (
-                        <span key={t} className="badge-tech">
-                          {t}
-                        </span>
+                        <TechBadge key={t.name} name={t.name} kind={t.kind} />
                       ))}
                     </div>
                   </div>
@@ -522,7 +474,15 @@ function Projects() {
                     </ul>
                   </div>
 
-                  <div className="mt-6 flex flex-wrap gap-2 border-t border-border pt-4">
+                  <div className="mt-6 flex flex-wrap items-center gap-2 border-t border-border pt-4">
+                    <Link
+                      to="/projects/$slug"
+                      params={{ slug: p.slug }}
+                      className="inline-flex items-center gap-2 rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
+                    >
+                      Read case study
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </Link>
                     {p.links.map((l) => {
                       const LIcon = l.icon;
                       const isExternal = l.href.startsWith("http");
@@ -553,13 +513,56 @@ function Projects() {
   );
 }
 
-function Experience() {
+function ProblemSolving() {
+  return (
+    <section id="problem-solving" className="border-b border-border">
+      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <SectionHeader
+          eyebrow="05 // Problem Solving"
+          title="Coding profiles & practice"
+          description="Where I sharpen data structures, algorithms, and SQL — plus the repositories where the work lives."
+        />
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {PROBLEM_SOLVING.map((p) => {
+            const Icon = p.icon;
+            return (
+              <a
+                key={p.platform}
+                href={p.href}
+                target="_blank"
+                rel="noreferrer"
+                className="card-surface card-surface-hover group flex flex-col p-6"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="grid h-10 w-10 place-items-center rounded-md border border-border bg-background text-primary">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <ExternalLink className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-primary" />
+                </div>
+                <h3 className="mt-4 text-base font-semibold text-foreground">
+                  {p.platform}
+                </h3>
+                <p className="mt-1 font-mono text-xs text-primary">{p.handle}</p>
+                <p className="mt-3 text-sm text-muted-foreground">{p.blurb}</p>
+              </a>
+            );
+          })}
+        </div>
+        <p className="mt-6 flex items-center gap-2 font-mono text-xs text-muted-foreground">
+          <Code2 className="h-3.5 w-3.5 text-primary" />
+          Consistent daily practice — DSA, SQL, and system-design fundamentals.
+        </p>
+      </div>
+    </section>
+  );
+}
 
+function Experience() {
   return (
     <section id="experience" className="border-b border-border">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <SectionHeader
-          eyebrow="04 // Professional Experience"
+          eyebrow="06 // Professional Experience"
           title="Roles, ownership & impact"
           description="Selected positions demonstrating leadership, outreach, and coordination across academic and professional environments."
         />
@@ -591,7 +594,7 @@ function Experience() {
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {exp.badges.map((b) => (
-                      <span key={b} className="badge-tech">
+                      <span key={b} className="badge-tech badge-tool">
                         {b}
                       </span>
                     ))}
@@ -631,7 +634,7 @@ function Academic() {
     <section id="academic" className="border-b border-border">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <SectionHeader
-          eyebrow="05 // Education & Certifications"
+          eyebrow="07 // Education & Certifications"
           title="Academic credentials & training"
           description="Formal education, certifications, and languages that support my professional profile."
         />
@@ -681,9 +684,7 @@ function Academic() {
             <div className="card-surface p-6">
               <div className="mb-4 flex items-center gap-2">
                 <MessagesSquare className="h-4 w-4 text-primary" />
-                <h3 className="font-mono text-sm font-semibold text-foreground">
-                  Languages
-                </h3>
+                <h3 className="font-mono text-sm font-semibold text-foreground">Languages</h3>
               </div>
               <ul className="space-y-2">
                 {LANGUAGES.map((l) => (
@@ -709,9 +710,9 @@ function Contact() {
     <section id="contact">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <SectionHeader
-          eyebrow="06 // Contact"
+          eyebrow="08 // Contact"
           title="Let's connect"
-          description="Available for roles in tech-driven sales, communications, digital marketing, and technical program coordination."
+          description="Available for software engineering internships, junior developer roles, and technical program work."
         />
         <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_1.2fr]">
           <div className="card-surface flex flex-col justify-between p-8">
@@ -719,12 +720,10 @@ function Contact() {
               <div className="mb-3 font-mono text-xs text-muted-foreground">
                 &gt; direct channels
               </div>
-              <h3 className="text-xl font-semibold text-foreground">
-                Reach out directly
-              </h3>
+              <h3 className="text-xl font-semibold text-foreground">Reach out directly</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                Comfortable with remote workflows, online meetings, and phone/tele-sales
-                communication. Use any of the channels below or send a message.
+                Comfortable with remote workflows, online meetings, and async communication. Use
+                any of the channels below or send a message.
               </p>
             </div>
             <div className="mt-6 space-y-2">
@@ -821,13 +820,9 @@ function ContactForm() {
       <div className="mb-6 flex items-center justify-between border-b border-border pb-4">
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-emerald" />
-          <h3 className="font-mono text-sm font-semibold text-foreground">
-            Send a message
-          </h3>
+          <h3 className="font-mono text-sm font-semibold text-foreground">Send a message</h3>
         </div>
-        <span className="font-mono text-[0.7rem] text-muted-foreground">
-          direct inbox
-        </span>
+        <span className="font-mono text-[0.7rem] text-muted-foreground">direct inbox</span>
       </div>
       <div className="space-y-4">
         <Field
@@ -896,7 +891,10 @@ function Field({
 }) {
   return (
     <div className="space-y-2">
-      <Label htmlFor={id} className="font-mono text-[0.7rem] uppercase tracking-wider text-muted-foreground">
+      <Label
+        htmlFor={id}
+        className="font-mono text-[0.7rem] uppercase tracking-wider text-muted-foreground"
+      >
         {label}
       </Label>
       <Input
@@ -923,29 +921,11 @@ function SectionHeader({
 }) {
   return (
     <div className="max-w-3xl">
-      <div className="font-mono text-xs uppercase tracking-widest text-primary">
-        {eyebrow}
-      </div>
+      <div className="font-mono text-xs uppercase tracking-widest text-primary">{eyebrow}</div>
       <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
         {title}
       </h2>
       <p className="mt-4 text-base text-muted-foreground">{description}</p>
     </div>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="border-t border-border bg-background">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-8 sm:flex-row sm:px-6 lg:px-8">
-        <div className="font-mono text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Ramisa Tabassum · Dhaka, Bangladesh
-        </div>
-        <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald" />
-          open to opportunities
-        </div>
-      </div>
-    </footer>
   );
 }
